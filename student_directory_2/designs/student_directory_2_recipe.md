@@ -114,18 +114,19 @@ CREATE TABLE cohorts (
 CREATE TABLE students (
   id SERIAL PRIMARY KEY,
   name text,
-  cohort text
--- The foreign key name is always {other_table_singular}_id   # watch table to figure out constraint section
+  cohort text,
+-- The foreign key name is always {other_table_singular}_id   
   cohort_id int,
-  constraint fk_artist foreign key(artist_id)
-    references artists(id)
+-- constraint (named fk_cohort here) ensures that numbers in cohort_id (foreign key) match the numbers cohorts(id) (reference)
+  constraint fk_cohort foreign key(cohort_id)
+    references cohorts(id)
+-- on delete cascasde means if rows are deleted in the parent table(cohorts) they also get deleted in the child table (students)
     on delete cascade
 );
-
 ```
 
 ## 5. Create the tables.
 
 ```bash
-psql -h 127.0.0.1 database_name < albums_table.sql
+psql -h 127.0.0.1 student_directory_2 < schema/cohorts_students_table.sql
 ```
