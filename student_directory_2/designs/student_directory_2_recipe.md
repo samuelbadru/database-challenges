@@ -53,18 +53,19 @@ Most of the time, you'll need either `text`, `int`, `bigint`, `numeric`, or `boo
 
 Remember to **always** have the primary key `id` as a first column. Its type will always be `SERIAL`.
 
+Can have date as a type.
 ```
 # EXAMPLE:
 
 Table: students
 id: SERIAL
 name: text
-cohort: text
+cohort: foreign_key
 
 Table: cohorts
 id: SERIAL
 name: text
-starting_date: text
+starting_date: date
 ```
 
 ## 4. Decide on The Tables Relationship
@@ -114,7 +115,6 @@ CREATE TABLE cohorts (
 CREATE TABLE students (
   id SERIAL PRIMARY KEY,
   name text,
-  cohort text,
 -- The foreign key name is always {other_table_singular}_id   
   cohort_id int,
 -- constraint (named fk_cohort here) ensures that numbers in cohort_id (foreign key) match the numbers cohorts(id) (reference)
