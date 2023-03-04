@@ -40,8 +40,7 @@ end
 ## 5. Define the Repository Class interface
 
 ```ruby
-# EXAMPLE
-# Table name: students
+# Table name: albums
 
 # Repository class
 # (in lib/album_repository.rb)
@@ -63,6 +62,18 @@ class AlbumRepository
     # SELECT id, title, release_year FROM albums WHERE id = $1
 
     # Returns an album object
+  end
+
+  # Inserts an album into the albums table
+  def creates_an_album(album) # One argument - album object
+    # Executes the SQL query:
+    # INSERT INTO albums (title, release_year, artist_id) VALUES ($1, $2, $3)
+  end
+
+  # Deletes an album from the albums table
+  def deletes_an_album(id) # One argument - id - int
+    # Executes the SQL query:
+    # DELETE FROM albums WHERE id = $1
   end
 end
 ```
@@ -111,6 +122,26 @@ album3.release_year # =>  '1974'
 album6.id # =>  6
 album6.title # =>  'Lover'
 album6.release_year # =>  '2019'
+
+# 4
+# Creates an album and inserts into table
+classic = Album.new
+classic.title = 'Red'
+classic.release_year ='2012' 
+classic.artist_id = 3
+
+albums = @repo.creates_an_album(classic)
+albums = @repo.lists_all_albums
+
+albums # => includes an album with title called 'Red' and release year '2012'
+
+
+# 5 
+# Deletes an album from the table
+albums = @repo.deletes_an_album(12)
+albums = @repo.lists_all_albums
+
+albums # => doesn't include an album with title called 'Red' and release year '2012'
 
 ```
 

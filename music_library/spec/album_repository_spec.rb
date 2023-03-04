@@ -42,4 +42,25 @@ describe AlbumRepository do
     expect(album6.title).to eq 'Lover'
     expect(album6.release_year).to eq '2019'
   end
+
+  it 'inserts a new album into the table' do
+    classic = Album.new
+    classic.title = 'Red'
+    classic.release_year ='2012' 
+    classic.artist_id = 3
+
+    albums = @repo.creates_an_album(classic)
+    albums = @repo.lists_all_albums
+
+    expect(albums[-1]).to have_attributes(title:'Red', release_year: '2012')
+  end
+
+  it 'deletes an album from the table' do
+    albums = @repo.deletes_an_album(12)
+    albums = @repo.lists_all_albums
+
+    albums.each do |album|
+      expect(album).not_to have_attributes(title:'Ring', release_year: '1973')
+    end
+  end
 end

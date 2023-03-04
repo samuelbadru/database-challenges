@@ -31,4 +31,18 @@ class AlbumRepository
 
     record
   end
+
+  # Inserts an album into the albums table
+  def creates_an_album(album) # One argument - album object
+    sql = 'INSERT INTO albums (title, release_year, artist_id) VALUES ($1, $2, $3)'
+    params = [album.title, album.release_year, album.artist_id]
+    insert_album = DatabaseConnection.exec_params(sql, params)
+  end
+
+
+  def deletes_an_album(id)
+    sql = 'DELETE FROM albums WHERE id = $1'
+    params = [id]
+    delete_album = DatabaseConnection.exec_params(sql, params)
+  end
 end
